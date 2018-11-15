@@ -91,9 +91,7 @@ public class AnimationView extends SurfaceView{
         } catch (Exception e) {
 
             postInvalidate();
-
         }
-
          */
 
         //checkpoint 1

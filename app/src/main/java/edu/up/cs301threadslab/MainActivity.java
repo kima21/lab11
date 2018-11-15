@@ -42,17 +42,23 @@ public class MainActivity extends Activity
         a.start();
 
 
+
+
     }//onClick
 
     @Override
     public void onClick(View v) {
         myAV.postInvalidate();
+
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+
         myAV.progressChange(seekBar.getProgress());
         myAV.postInvalidate();
+
+
     }
 
     /** These two methods aren't used */

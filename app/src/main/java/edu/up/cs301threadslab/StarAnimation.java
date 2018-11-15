@@ -14,8 +14,9 @@ import java.util.Random;
  */
 public class StarAnimation extends Animation {
 
+
     /* the field of stars */
-    public static final int INIT_STAR_COUNT = 1000;
+    public static final int INIT_STAR_COUNT = 100;
     private Vector<Star> field = new Vector<Star>();
 
     /* when this is set to 'false' the next animation frame won't twinkle */
@@ -24,6 +25,8 @@ public class StarAnimation extends Animation {
     /** ctor expects to be told the size of the animation canvas */
     public StarAnimation(int initWidth, int initHeight) {
         super(initWidth, initHeight);
+        AddRemove addy = new AddRemove();
+
     }
 
     /** whenever the canvas size changes, generate new stars */
@@ -71,16 +74,33 @@ public class StarAnimation extends Animation {
         this.twinkle = true;
     }//draw
 
-    /** the seekbar progress specifies the brightness of the stars. */
+    /** the seekbar progress adds or decreases the number of stars */
     @Override
     public void progressChange(int newProgress) {
 
         /**
+         * the seekbar progress used to specify the brightness of the stars.
+         *
         int brightness = 255 - (newProgress * 2);
         Star.starPaint.setColor(Color.rgb(brightness, brightness, brightness));
          */
 
+        //get the field size
+        int numStars = field.size();
 
+        //newProgress is 1 - 100, but we want 100 - 1000
+        //int starsWanted = (newProgress*9)+100;
+        int starsWanted = (int)(100 + (((900-1)/100.0)*newProgress)); //casting from double to int
+
+        while(starsWanted > numStars){ //or can do while(newProgress > field.size()
+            addStar();
+            numStars = field.size(); //update the field size
+        }
+
+        while (starsWanted < numStars){
+            removeStar();
+            numStars = field.size(); //update the field size
+        }
 
         this.twinkle = false;
     }
